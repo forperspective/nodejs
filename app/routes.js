@@ -168,7 +168,18 @@ module.exports = function(app, passport,server) {
  				});
   		});
 
-
+	app.get('/admin/contents', auth, function(request, response) {
+		response.render('admin/contents');
+	});
+	app.get('/admin/settings', auth, function(request, response) {
+		response.render('admin/settings');
+	});
+	app.get('/admin/users', auth, function(request, response) {
+		response.render('admin/users');
+	});
+	app.get('/admin/comments', auth, function(request, response) {
+		response.render('admin/comments');
+	});
 
 // GET /auth/facebook
 // Use passport.authenticate() as route middleware to authenticate the
