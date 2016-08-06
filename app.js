@@ -22,17 +22,32 @@ var configDB = require('./config/database.js');
 var app      = express();
 
 
-var dbURI = 'mongodb://localhost:27017/noondb';
-mongoose.connect(dbURI);
-mongoose.connection.on('connected', function () {
-    console.log('Mongoose connected to ' + dbURI);
+
+
+
+/*
+//module.exports=ArticleProvider.findAll( function(error,docs){});
+//module.exports=getResult();
+app.get('/', function(req, res){
+	
+	//ArticleProvider.printedd();
+	var drinks = [
+        { name: 'Bloody Mary', drunkness: 3 },
+        { name: 'Martini', drunkness: 5 },
+        { name: 'Scotch', drunkness: 10 }
+    ];
+	//var result = ArticleProvider.findAll(function(err, doc){
+		res.render('site/index', { 
+				title: 'Blog',
+				drinks:drinks
+		});
+	//});
 });
-mongoose.connection.on('error',function (err) {
-    console.log('Mongoose connection error: ' + err);
-});
-mongoose.connection.on('disconnected', function () {
-    console.log('Mongoose disconnected');
-});
+*/
+
+
+
+	
 
 require('./config/passport')(passport); 
 

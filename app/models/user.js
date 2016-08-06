@@ -1,32 +1,220 @@
-var mongoose = require('mongoose');
+/*var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
-var userSchema = mongoose.Schema({
-    user             : {
-	username     :String,
-    email        : String,
-    password     : String,
-	name	     : String,
-	address      : String
+var contentSchema = mongoose.Schema({
+    content             : {
+	title     :String,
+    content   : String,
+    content   : String,
+    created   : Date
     }
 });
+contentSchema.methods.getAll = function(request, response){
 
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+	
+};
+*/
+
+/*
+var Db = require('mongodb').Db;
+var Connection = require('mongodb').Connection;
+var Server = require('mongodb').Server;
+var BSON = require('mongodb').BSON;
+var ObjectID = require('mongodb').ObjectID;
+
+
+ArticleProvider = function(host, port) {
+  this.db= new Db('noondb', new Server(host, port, {auto_reconnect: true}, {}));
+  this.db.open(function(){});
 };
 
-userSchema.methods.verifyPassword = function(password) {
-    return bcrypt.compareSync(password, this.user.password);
+
+ArticleProvider.getCollection= function(callback) {
+  this.db.collection('user', function(error, article_collection) {
+    if( error ) callback(error);
+    else callback(null, article_collection);
+  });
 };
 
-userSchema.methods.updateUser = function(request, response){
-
-	this.user.name = request.body.name;
-	this.user.address = request.body.address;
-	 this.user.save();
-	response.redirect('/user');
+ArticleProvider.findAll = function(callback) {
+    this.getCollection(function(error, article_collection) {
+      if( error ) callback(error)
+      else {
+        article_collection.find().toArray(function(error, results) {
+          if( error ) callback(error)
+          else callback(null, results);console.dir(doc);
+        });
+      }
+    });
 };
 
 
+ArticleProvider.findById = function(id, callback) {
+    this.getCollection(function(error, article_collection) {
+      if( error ) callback(error)
+      else {
+        article_collection.findOne({_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
+          if( error ) callback(error)
+          else callback(null, result)
+        });
+      }
+    });
+};
 
-module.exports = mongoose.model('User', userSchema);
+ArticleProvider.save = function(articles, callback) {
+    this.getCollection(function(error, article_collection) {
+      if( error ) callback(error)
+      else {
+        if( typeof(articles.length)=="undefined")
+          articles = [articles];
+
+        for( var i =0;i< articles.length;i++ ) {
+          article = articles[i];
+          article.created_at = new Date();
+          if( article.comments === undefined ) article.comments = [];
+          for(var j =0;j< article.comments.length; j++) {
+            article.comments[j].created_at = new Date();
+          }
+        }
+
+        article_collection.insert(articles, function() {
+          callback(null, articles);
+        });
+      }
+    });
+};
+*/
+
+
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/noondb';
+var ArticleProvider=function(){};
+
+ArticleProvider.getResult=function (callback) {
+   MongoClient.connect(url, function (err, db) {
+       /*if (err) {
+        console.log('Unable to connect to the mongoDB server. Error:', err);
+      } else {
+        console.log('Connection established to', url);
+
+
+        // Get the documents collection
+        var collection = db.collection('user');
+
+        // Query the collection    
+        collection.find(),(function (err, result) {
+          if (err) {
+            console.log(err);
+          } else if (result.length) {
+            console.log('Found:', result);
+          } else {
+            console.log('No document(s) found with defined "find" criteria!');
+          }
+          //Close connection
+          db.close();
+          callback(err, result);
+        });
+      }
+   }); */
+	
+	    var cursor =db.collection('user').find().toArray(function(error, results) {
+          if( error ) callback(error)
+          else db.close();callback(null, results);console.dir(results);
+        });
+		
+	    //console.dir(cursor);
+		//callback(cursor);
+		  /*cursor.each(function(err, doc) {
+			  assert.equal(err, null);
+			  if (doc != null) {
+				 console.dir(doc);
+				 callback(doc);
+			  } else {
+				 callback();
+				 console.log('No data');
+				 
+			  }
+		   });*/
+		/*var collection = db.collection('user');   
+		   collection.find(),(function (err, result) {
+			  if (err) {
+				console.log(err);
+				callback();
+			  } else if (result.length) {
+				console.log('Found:', result);
+				callback();
+			  } else {
+				console.log('No document(s) found with defined "find" criteria!');
+				callback();
+			  }
+			  //Close connection
+			  db.close();
+			  callback(err, result);
+			});
+	    */
+	   
+	   
+	   
+   });
+	
+}
+
+ArticleProvider.save = function(callback,articles) {
+    /*this.getCollection(function(error, article_collection) {
+      if( error ) callback(error)
+      else {
+        if( typeof(articles.length)=="undefined")
+          articles = [articles];
+
+        for( var i =0;i< articles.length;i++ ) {
+          article = articles[i];
+          article.created_at = new Date();
+          if( article.comments === undefined ) article.comments = [];
+          for(var j =0;j< article.comments.length; j++) {
+            article.comments[j].created_at = new Date();
+          }
+        }
+		
+        article_collection.insert(articles, function() {
+          callback(null, articles);
+        });
+      }
+    });*/
+	MongoClient.connect(url, function (err, db) {
+		/*var cursor =db.collection('user');
+	
+		//article.created_at = new Date();
+		//article.username = 'new user';
+		//article.email = 'newuser@test.com';
+		cursor.insert(article, function() {
+		  //callback(null, articles);
+		  console.log('Done Insert');
+		  db.close();
+		  callback();
+		});
+		*/
+		var document={
+			  username : "new user",
+			  email : "newuser@test.com"
+	    };
+		db.collection('user').save(document, function(err, records){
+		  //console.log("Record added as "+records['']._id);
+		  console.log("Record added as ");
+		});
+					  
+		
+		
+	});
+	
+};
+
+ArticleProvider.printedd = function(callback) {
+	console.log('inside.......');
+};
+
+module.exports.ArticleProvider = ArticleProvider;
+
+//module.exports = mongoose.model('Content', contentSchema);
+

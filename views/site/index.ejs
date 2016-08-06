@@ -38,16 +38,40 @@
             <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
           </div>
           <div class="row">
-            
-			<% for(var i=0; i<3 ;i++){ %>
+            <% //if(collection){ %>
+			<% collection.forEach(function(coll) { %>
+			
+			<div class="col-xs-6 col-lg-4">
+              <h2><%= coll.title %></h2>
+              <h5><%= coll.created %>  By: <%= coll.by %></h5>
+              <p><%= coll.content %> </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div>
+			
+			<% }); %>
+			<% //}); %>
+			<!--<% for(var i=0; i<3 ;i++){ %>
 			<div class="col-xs-6 col-lg-4">
               <h2>Content <%= i %></h2>
               <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
               <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
+            </div>
 			<% } %>
+			-->
+            <br clear="all"/>
+			<!--<ul>
+				<% collection.forEach(function(coll) { %>
+					<li><%= coll.id %></li>
+					<li><%= coll.email %></li>
+					<li><%= coll.username %></li>
+					<li><%= coll.name %></li>
+					<li><%= coll.address %></li>
+				<% }); %>
+			</ul>-->
+
+
 			
-            
+			
           </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->
 

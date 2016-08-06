@@ -4,18 +4,44 @@ var Friend       = require('../app/models/friend');
 async = require("async");
 var path = require('path'),
     fs = require('fs');
-	
 
-  
-  
+var ArticleProvider = require('../app/models/content').ArticleProvider;
+
+	
+/*
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/noondb';
+*/
+/*
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+  Content(db, function() {
+      //db.close();
+	  
+  });
+}) 
+*/ 
+var ArticleProvider = require('../app/models/content').ArticleProvider;  
 module.exports = function(app, passport,server) {
 
-	app.get('/', function(request, response) {
+	/*app.get('/', function(request, response) {
 		
 		response.render('site/index',{dbview:""});
 		
 		
+	});*/
+	
+	app.get('/', function(req, res) {
+	  var save =ArticleProvider.save(function(err, save){});
+	  var result = ArticleProvider.getResult(function(err, result){
+		  //handle err, then you can render your view
+		  res.render('site/index', {collection: result});
+	  });
+
 	});
+	
 	app.get('/about', function(request, response) {
 		response.render('site/about');
 	});	
